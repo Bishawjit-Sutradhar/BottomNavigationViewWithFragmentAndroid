@@ -1,0 +1,48 @@
+package com.example.bottomnavigationviewwithfragment;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+public class MainActivity extends AppCompatActivity {
+
+    BottomNavigationView bottomNavigationView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        bottomNavigationView=(BottomNavigationView)findViewById(R.id.BottomBarId);
+
+        //First time home icon show korar jonno method
+
+        if(savedInstanceState==null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.frameViewId,new HomeSubActivity()).commit();
+        }
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                Fragment fragment=null;
+                if(item.getItemId()==R.id.homeId){
+                    fragment=new HomeSubActivity();
+                }
+                if(item.getItemId()==R.id.settingId){
+                    fragment=new SettingSubActivity();
+                }
+                if ((item.getItemId()==R.id.personId)){
+                    fragment=new ProfileSubActivity();
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameViewId,fragment).commit();
+
+                return false;
+            }
+        });
+    }
+}
